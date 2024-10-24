@@ -60,11 +60,6 @@ variable "stage_prod" {
 }
 
 
-variable "notification_email" {
-  description = "secret_key"
-  type        = string
-
-}
 
 variable "input_template" {
   description = "secret_key"
