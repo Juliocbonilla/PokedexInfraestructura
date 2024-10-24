@@ -1,0 +1,594 @@
+{
+  "C:\\Users\\jhoss\\Documents\\ProyectoAWS\\ProyectoGrupo3\\lambdas\\aws-lamba-to-do-tasks": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.7",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>"
+    },
+    "composeServiceName": null,
+    "servicePath": "C:\\Users\\jhoss\\Documents\\ProyectoAWS\\ProyectoGrupo3\\lambdas\\aws-lamba-to-do-tasks",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "jhossedmolina",
+      "app": "aws-lambda-to-do-tasks",
+      "service": "aws-lamba-to-do-tasks",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "region": "us-east-1",
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:*"
+            ],
+            "Resource": "arn:aws:dynamodb:us-east-1:992382818939:table/ToDoTaskTable"
+          }
+        ],
+        "stage": "dev",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "HelloLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/aws-lamba-to-do-tasks-dev-hello"
+              }
+            },
+            "CreateTaskLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/aws-lamba-to-do-tasks-dev-createTask"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "aws-lamba-to-do-tasks",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lamba-to-do-tasks-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lamba-to-do-tasks-dev*:*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "dynamodb:*"
+                          ],
+                          "Resource": "arn:aws:dynamodb:us-east-1:992382818939:table/ToDoTaskTable"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "aws-lamba-to-do-tasks",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "HelloLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
+                  "S3Key": "serverless/aws-lamba-to-do-tasks/dev/1729648322251-2024-10-23T01:52:02.251Z/aws-lamba-to-do-tasks.zip"
+                },
+                "Handler": "src/handler.hello",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "aws-lamba-to-do-tasks-dev-hello",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "HelloLogGroup"
+              ]
+            },
+            "CreateTaskLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
+                  "S3Key": "serverless/aws-lamba-to-do-tasks/dev/1729648322251-2024-10-23T01:52:02.251Z/aws-lamba-to-do-tasks.zip"
+                },
+                "Handler": "src/addTask.addTask",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "aws-lamba-to-do-tasks-dev-createTask",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "CreateTaskLogGroup"
+              ]
+            },
+            "HelloLambdaVersionhjFYFOLcsV8BHaleG5ZTA0g2QgTHuYhF8oETBEI": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "HelloLambdaFunction"
+                },
+                "CodeSha256": "k0RYQDbnHpOUvevllHyYzhGwvVU3P3UzbeaUylZ43g4="
+              }
+            },
+            "CreateTaskLambdaVersionb8IDoMZjU4sQtfeWSi7XQUbLJ6BuwVRNPb4g0cccDL8": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "CreateTaskLambdaFunction"
+                },
+                "CodeSha256": "k0RYQDbnHpOUvevllHyYzhGwvVU3P3UzbeaUylZ43g4="
+              }
+            },
+            "HttpApi": {
+              "Type": "AWS::ApiGatewayV2::Api",
+              "Properties": {
+                "Name": "dev-aws-lamba-to-do-tasks",
+                "ProtocolType": "HTTP"
+              }
+            },
+            "HttpApiStage": {
+              "Type": "AWS::ApiGatewayV2::Stage",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "StageName": "$default",
+                "AutoDeploy": true,
+                "DefaultRouteSettings": {
+                  "DetailedMetricsEnabled": false
+                }
+              }
+            },
+            "HelloLambdaPermissionHttpApi": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "HelloLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "HttpApi"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "HttpApiIntegrationHello": {
+              "Type": "AWS::ApiGatewayV2::Integration",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                  "Fn::GetAtt": [
+                    "HelloLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "PayloadFormatVersion": "2.0",
+                "TimeoutInMillis": 30000
+              }
+            },
+            "HttpApiRouteGet": {
+              "Type": "AWS::ApiGatewayV2::Route",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "RouteKey": "GET /",
+                "Target": {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      "integrations",
+                      {
+                        "Ref": "HttpApiIntegrationHello"
+                      }
+                    ]
+                  ]
+                }
+              },
+              "DependsOn": "HttpApiIntegrationHello"
+            },
+            "CreateTaskLambdaPermissionHttpApi": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "CreateTaskLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "HttpApi"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "HttpApiIntegrationCreateTask": {
+              "Type": "AWS::ApiGatewayV2::Integration",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                  "Fn::GetAtt": [
+                    "CreateTaskLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "PayloadFormatVersion": "2.0",
+                "TimeoutInMillis": 30000
+              }
+            },
+            "HttpApiRoutePostTasks": {
+              "Type": "AWS::ApiGatewayV2::Route",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "RouteKey": "POST /tasks",
+                "Target": {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      "integrations",
+                      {
+                        "Ref": "HttpApiIntegrationCreateTask"
+                      }
+                    ]
+                  ]
+                }
+              },
+              "DependsOn": "HttpApiIntegrationCreateTask"
+            },
+            "ToDoTaskTable": {
+              "Type": "AWS::DynamoDB::Table",
+              "Properties": {
+                "TableName": "ToDoTaskTable",
+                "BillingMode": "PAY_PER_REQUEST",
+                "AttributeDefinitions": [
+                  {
+                    "AttributeName": "id",
+                    "AttributeType": "S"
+                  }
+                ],
+                "KeySchema": [
+                  {
+                    "AttributeName": "id",
+                    "KeyType": "HASH"
+                  }
+                ]
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
+              "Export": {
+                "Name": "sls-aws-lamba-to-do-tasks-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "HelloLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "HelloLambdaVersionhjFYFOLcsV8BHaleG5ZTA0g2QgTHuYhF8oETBEI"
+              },
+              "Export": {
+                "Name": "sls-aws-lamba-to-do-tasks-dev-HelloLambdaFunctionQualifiedArn"
+              }
+            },
+            "CreateTaskLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "CreateTaskLambdaVersionb8IDoMZjU4sQtfeWSi7XQUbLJ6BuwVRNPb4g0cccDL8"
+              },
+              "Export": {
+                "Name": "sls-aws-lamba-to-do-tasks-dev-CreateTaskLambdaFunctionQualifiedArn"
+              }
+            },
+            "HttpApiId": {
+              "Description": "Id of the HTTP API",
+              "Value": {
+                "Ref": "HttpApi"
+              },
+              "Export": {
+                "Name": "sls-aws-lamba-to-do-tasks-dev-HttpApiId"
+              }
+            },
+            "HttpApiUrl": {
+              "Description": "URL of the HTTP API",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-aws-lamba-to-do-tasks-dev-HttpApiUrl"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "functions": {
+        "hello": {
+          "handler": "src/handler.hello",
+          "events": [
+            {
+              "httpApi": {
+                "path": "/",
+                "method": "get"
+              },
+              "resolvedMethod": "GET",
+              "resolvedPath": "/"
+            }
+          ],
+          "name": "aws-lamba-to-do-tasks-dev-hello",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "HelloLambdaVersionhjFYFOLcsV8BHaleG5ZTA0g2QgTHuYhF8oETBEI"
+        },
+        "createTask": {
+          "handler": "src/addTask.addTask",
+          "events": [
+            {
+              "httpApi": {
+                "path": "/tasks",
+                "method": "post",
+                "cors": true
+              },
+              "resolvedMethod": "POST",
+              "resolvedPath": "/tasks"
+            }
+          ],
+          "name": "aws-lamba-to-do-tasks-dev-createTask",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "CreateTaskLambdaVersionb8IDoMZjU4sQtfeWSi7XQUbLJ6BuwVRNPb4g0cccDL8"
+        }
+      },
+      "resources": {
+        "Resources": {
+          "ToDoTaskTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "ToDoTaskTable",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          }
+        },
+        "Outputs": {}
+      }
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: jhossedmolina\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\napp: aws-lambda-to-do-tasks\n# \"service\" is the name of this project. This will also be added to your AWS resource names.\nservice: aws-lamba-to-do-tasks\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  region: us-east-1\n  iamRoleStatements:\n    - Effect: Allow\n      Action:\n        - dynamodb:*\n      Resource:\n        - arn:aws:dynamodb:us-east-1:992382818939:table/ToDoTaskTable\n\nfunctions:\n  hello:\n    handler: src/handler.hello\n    events:\n      - httpApi:\n          path: /\n          method: get\n  createTask:\n    handler: src/addTask.addTask\n    events:\n      - httpApi:\n          path: /tasks\n          method: post\n          cors: true\n\nresources:\n  Resources:\n    ToDoTaskTable:\n      Type: AWS::DynamoDB::Table\n      Properties:\n        TableName: ToDoTaskTable\n        BillingMode: PAY_PER_REQUEST\n        AttributeDefinitions:\n          - AttributeName: id\n            AttributeType: S\n        KeySchema:\n          - AttributeName: id\n            KeyType: HASH\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "error": null,
+    "params": {},
+    "machineId": "0f9ee4ff80b74d26486a636afb5fc9e9",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "406c6f5c-2689-4cda-947c-4b483798a60d",
+    "orgName": "jhossedmolina",
+    "userId": "xHbgk1LXTpcVLk76F5",
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": false,
+        "monitoring": false
+      },
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": "lQg6w8Y9H9Q4BWtlM8",
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "jhossedmolina",
+    "subscription": null,
+    "userEmail": "jhossedmolina@gmail.com",
+    "serviceProviderAwsRegion": "us-east-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "992382818939",
+    "projectType": "traditional",
+    "versionSf": "4.4.7",
+    "serviceProviderAwsCfStackName": "aws-lamba-to-do-tasks-dev",
+    "integrations": {},
+    "serviceUniqueId": "arn:aws:cloudformation:us-east-1:992382818939:stack/aws-lamba-to-do-tasks-dev/107b5de0-90dc-11ef-a29a-124852ae4e3d",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:992382818939:stack/aws-lamba-to-do-tasks-dev/107b5de0-90dc-11ef-a29a-124852ae4e3d",
+    "serviceProviderAwsCfStackCreated": "2024-10-23T01:13:51.704Z",
+    "serviceProviderAwsCfStackUpdated": "2024-10-23T01:52:11.013Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "CreateTaskLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:992382818939:function:aws-lamba-to-do-tasks-dev-createTask:4",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-aws-lamba-to-do-tasks-dev-CreateTaskLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "HelloLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:992382818939:function:aws-lamba-to-do-tasks-dev-hello:5",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-aws-lamba-to-do-tasks-dev-HelloLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "HttpApiId",
+        "OutputValue": "px5e6p3197",
+        "Description": "Id of the HTTP API",
+        "ExportName": "sls-aws-lamba-to-do-tasks-dev-HttpApiId"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
+        "ExportName": "sls-aws-lamba-to-do-tasks-dev-ServerlessDeploymentBucketName"
+      },
+      {
+        "OutputKey": "HttpApiUrl",
+        "OutputValue": "https://px5e6p3197.execute-api.us-east-1.amazonaws.com",
+        "Description": "URL of the HTTP API",
+        "ExportName": "sls-aws-lamba-to-do-tasks-dev-HttpApiUrl"
+      }
+    ]
+  }
+}
