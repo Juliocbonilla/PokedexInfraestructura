@@ -1,7 +1,4 @@
 region        = "us-east-1"
-my_access_key = ""
-my_secret_key = ""
-
 
 project_name = "POKEDEX"
 
