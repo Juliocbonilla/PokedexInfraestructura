@@ -2,8 +2,8 @@ region        = "us-east-1"
 
 project_name = "POKEDEX"
 
-github_repo_url = "https://github.com/cartman8d/bootcamp_proyect"
-oauth_token        = ""
+github_repo_url = "https://github.com/Juliocbonilla/PokedexApp"
+oauth_token        = "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"
 
 github_branch_dev  = "dev"
 github_branch_qa   = "qa"
