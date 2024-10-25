@@ -2,16 +2,16 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application",
   "Resources": {
-    "HelloLogGroup": {
+    "GetPokemonsLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/aws-lamba-to-do-tasks-dev-hello"
+        "LogGroupName": "/aws/lambda/aws-lambda-pokedex-app-dev-getPokemons"
       }
     },
-    "CreateTaskLogGroup": {
+    "CapturePokemonLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/aws-lamba-to-do-tasks-dev-createTask"
+        "LogGroupName": "/aws/lambda/aws-lambda-pokedex-app-dev-capturePokemon"
       }
     },
     "IamRoleLambdaExecution": {
@@ -39,7 +39,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "aws-lamba-to-do-tasks",
+                  "aws-lambda-pokedex-app",
                   "dev",
                   "lambda"
                 ]
@@ -57,7 +57,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lamba-to-do-tasks-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-pokedex-app-dev*:*"
                     }
                   ]
                 },
@@ -68,7 +68,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lamba-to-do-tasks-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-pokedex-app-dev*:*:*"
                     }
                   ]
                 },
@@ -77,7 +77,7 @@
                   "Action": [
                     "dynamodb:*"
                   ],
-                  "Resource": "arn:aws:dynamodb:us-east-1:992382818939:table/ToDoTaskTable"
+                  "Resource": "arn:aws:dynamodb:us-east-1:992382818939:table/PokemonTable"
                 }
               ]
             }
@@ -88,7 +88,7 @@
           "Fn::Join": [
             "-",
             [
-              "aws-lamba-to-do-tasks",
+              "aws-lambda-pokedex-app",
               "dev",
               {
                 "Ref": "AWS::Region"
@@ -99,16 +99,16 @@
         }
       }
     },
-    "HelloLambdaFunction": {
+    "GetPokemonsLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
-          "S3Key": "serverless/aws-lamba-to-do-tasks/dev/1729648322251-2024-10-23T01:52:02.251Z/aws-lamba-to-do-tasks.zip"
+          "S3Key": "serverless/aws-lambda-pokedex-app/dev/1729831352416-2024-10-25T04:42:32.416Z/aws-lambda-pokedex-app.zip"
         },
-        "Handler": "src/handler.hello",
+        "Handler": "src/getPokemons.getPokemons",
         "Runtime": "nodejs20.x",
-        "FunctionName": "aws-lamba-to-do-tasks-dev-hello",
+        "FunctionName": "aws-lambda-pokedex-app-dev-getPokemons",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -119,19 +119,19 @@
         }
       },
       "DependsOn": [
-        "HelloLogGroup"
+        "GetPokemonsLogGroup"
       ]
     },
-    "CreateTaskLambdaFunction": {
+    "CapturePokemonLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
-          "S3Key": "serverless/aws-lamba-to-do-tasks/dev/1729648322251-2024-10-23T01:52:02.251Z/aws-lamba-to-do-tasks.zip"
+          "S3Key": "serverless/aws-lambda-pokedex-app/dev/1729831352416-2024-10-25T04:42:32.416Z/aws-lambda-pokedex-app.zip"
         },
-        "Handler": "src/addTask.addTask",
+        "Handler": "src/capturePokemon.capturePokemon",
         "Runtime": "nodejs20.x",
-        "FunctionName": "aws-lamba-to-do-tasks-dev-createTask",
+        "FunctionName": "aws-lambda-pokedex-app-dev-capturePokemon",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -142,33 +142,33 @@
         }
       },
       "DependsOn": [
-        "CreateTaskLogGroup"
+        "CapturePokemonLogGroup"
       ]
     },
-    "HelloLambdaVersionhjFYFOLcsV8BHaleG5ZTA0g2QgTHuYhF8oETBEI": {
+    "GetPokemonsLambdaVersionajEmrP5lTt359X0iElJHA7S5rnQQG6TGVwmNYTIQzqM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "HelloLambdaFunction"
+          "Ref": "GetPokemonsLambdaFunction"
         },
-        "CodeSha256": "k0RYQDbnHpOUvevllHyYzhGwvVU3P3UzbeaUylZ43g4="
+        "CodeSha256": "jIzwmtyIbdnzutoAZJw36fHd9EqEQD6/Xh8NFPplxiI="
       }
     },
-    "CreateTaskLambdaVersionb8IDoMZjU4sQtfeWSi7XQUbLJ6BuwVRNPb4g0cccDL8": {
+    "CapturePokemonLambdaVersion7uDHdgSgm011R13FMaXezwYH4ieAcSLvpIfBzKZAeKM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "CreateTaskLambdaFunction"
+          "Ref": "CapturePokemonLambdaFunction"
         },
-        "CodeSha256": "k0RYQDbnHpOUvevllHyYzhGwvVU3P3UzbeaUylZ43g4="
+        "CodeSha256": "jIzwmtyIbdnzutoAZJw36fHd9EqEQD6/Xh8NFPplxiI="
       }
     },
     "HttpApi": {
       "Type": "AWS::ApiGatewayV2::Api",
       "Properties": {
-        "Name": "dev-aws-lamba-to-do-tasks",
+        "Name": "dev-aws-lambda-pokedex-app",
         "ProtocolType": "HTTP"
       }
     },
@@ -185,12 +185,12 @@
         }
       }
     },
-    "HelloLambdaPermissionHttpApi": {
+    "GetPokemonsLambdaPermissionHttpApi": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "GetPokemonsLambdaFunction",
             "Arn"
           ]
         },
@@ -222,7 +222,7 @@
         }
       }
     },
-    "HttpApiIntegrationHello": {
+    "HttpApiIntegrationGetPokemons": {
       "Type": "AWS::ApiGatewayV2::Integration",
       "Properties": {
         "ApiId": {
@@ -231,7 +231,7 @@
         "IntegrationType": "AWS_PROXY",
         "IntegrationUri": {
           "Fn::GetAtt": [
-            "HelloLambdaFunction",
+            "GetPokemonsLambdaFunction",
             "Arn"
           ]
         },
@@ -239,33 +239,33 @@
         "TimeoutInMillis": 30000
       }
     },
-    "HttpApiRouteGet": {
+    "HttpApiRouteGetGetpokemons": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "GET /",
+        "RouteKey": "GET /getPokemons",
         "Target": {
           "Fn::Join": [
             "/",
             [
               "integrations",
               {
-                "Ref": "HttpApiIntegrationHello"
+                "Ref": "HttpApiIntegrationGetPokemons"
               }
             ]
           ]
         }
       },
-      "DependsOn": "HttpApiIntegrationHello"
+      "DependsOn": "HttpApiIntegrationGetPokemons"
     },
-    "CreateTaskLambdaPermissionHttpApi": {
+    "CapturePokemonLambdaPermissionHttpApi": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "CreateTaskLambdaFunction",
+            "CapturePokemonLambdaFunction",
             "Arn"
           ]
         },
@@ -297,7 +297,7 @@
         }
       }
     },
-    "HttpApiIntegrationCreateTask": {
+    "HttpApiIntegrationCapturePokemon": {
       "Type": "AWS::ApiGatewayV2::Integration",
       "Properties": {
         "ApiId": {
@@ -306,7 +306,7 @@
         "IntegrationType": "AWS_PROXY",
         "IntegrationUri": {
           "Fn::GetAtt": [
-            "CreateTaskLambdaFunction",
+            "CapturePokemonLambdaFunction",
             "Arn"
           ]
         },
@@ -314,31 +314,31 @@
         "TimeoutInMillis": 30000
       }
     },
-    "HttpApiRoutePostTasks": {
+    "HttpApiRoutePostCapturepokemon": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "POST /tasks",
+        "RouteKey": "POST /capturePokemon",
         "Target": {
           "Fn::Join": [
             "/",
             [
               "integrations",
               {
-                "Ref": "HttpApiIntegrationCreateTask"
+                "Ref": "HttpApiIntegrationCapturePokemon"
               }
             ]
           ]
         }
       },
-      "DependsOn": "HttpApiIntegrationCreateTask"
+      "DependsOn": "HttpApiIntegrationCapturePokemon"
     },
     "ToDoTaskTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TableName": "ToDoTaskTable",
+        "TableName": "PokemonTable",
         "BillingMode": "PAY_PER_REQUEST",
         "AttributeDefinitions": [
           {
@@ -359,25 +359,25 @@
     "ServerlessDeploymentBucketName": {
       "Value": "serverless-framework-deployments-us-east-1-d476c1af-3fdd",
       "Export": {
-        "Name": "sls-aws-lamba-to-do-tasks-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-aws-lambda-pokedex-app-dev-ServerlessDeploymentBucketName"
       }
     },
-    "HelloLambdaFunctionQualifiedArn": {
+    "GetPokemonsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionhjFYFOLcsV8BHaleG5ZTA0g2QgTHuYhF8oETBEI"
+        "Ref": "GetPokemonsLambdaVersionajEmrP5lTt359X0iElJHA7S5rnQQG6TGVwmNYTIQzqM"
       },
       "Export": {
-        "Name": "sls-aws-lamba-to-do-tasks-dev-HelloLambdaFunctionQualifiedArn"
+        "Name": "sls-aws-lambda-pokedex-app-dev-GetPokemonsLambdaFunctionQualifiedArn"
       }
     },
-    "CreateTaskLambdaFunctionQualifiedArn": {
+    "CapturePokemonLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateTaskLambdaVersionb8IDoMZjU4sQtfeWSi7XQUbLJ6BuwVRNPb4g0cccDL8"
+        "Ref": "CapturePokemonLambdaVersion7uDHdgSgm011R13FMaXezwYH4ieAcSLvpIfBzKZAeKM"
       },
       "Export": {
-        "Name": "sls-aws-lamba-to-do-tasks-dev-CreateTaskLambdaFunctionQualifiedArn"
+        "Name": "sls-aws-lambda-pokedex-app-dev-CapturePokemonLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {
@@ -386,7 +386,7 @@
         "Ref": "HttpApi"
       },
       "Export": {
-        "Name": "sls-aws-lamba-to-do-tasks-dev-HttpApiId"
+        "Name": "sls-aws-lambda-pokedex-app-dev-HttpApiId"
       }
     },
     "HttpApiUrl": {
@@ -411,7 +411,7 @@
         ]
       },
       "Export": {
-        "Name": "sls-aws-lamba-to-do-tasks-dev-HttpApiUrl"
+        "Name": "sls-aws-lambda-pokedex-app-dev-HttpApiUrl"
       }
     }
   }

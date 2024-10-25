@@ -17,13 +17,13 @@ provider:
         - arn:aws:dynamodb:us-east-1:992382818939:table/PokemonTable
 
 functions:
-  hello:
-    handler: src/handler.hello
+  getPokemons:
+    handler: src/getPokemons.getPokemons
     events:
       - httpApi:
-          path: /
+          path: /getPokemons
           method: get
-  createTask:
+  capturePokemon:
     handler: src/capturePokemon.capturePokemon
     events:
       - httpApi:
