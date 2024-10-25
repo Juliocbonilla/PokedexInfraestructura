@@ -1,8 +1,6 @@
 # Configure the AWS Provider
 provider "aws" {
   region     = var.region
-  access_key = var.my_access_key
-  secret_key = var.my_secret_key
 }
 
 resource "aws_amplify_app" "pokedex" {

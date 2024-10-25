@@ -41,18 +41,6 @@ variable "oauth_token" {
 }
 
 
-variable "my_access_key" {
-  description = "my_access_key"
-  type        = string
-
-}
-
-variable "my_secret_key" {
-  description = "secret_key"
-  type        = string
-
-}
-
 variable "stage_dev" {
   description = "secret_key"
   type        = string
@@ -72,11 +60,6 @@ variable "stage_prod" {
 }
 
 
-variable "notification_email" {
-  description = "secret_key"
-  type        = string
-
-}
 
 variable "input_template" {
   description = "secret_key"
