@@ -70,7 +70,6 @@ resource "aws_amplify_branch" "prod" {
   stage               = var.stage_prod
   enable_notification = true
 
-  # Despliega automáticamente cuando se crea la rama
   depends_on = [aws_amplify_app.pokedex]
 
 }
