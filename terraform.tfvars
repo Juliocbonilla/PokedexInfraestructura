@@ -3,7 +3,7 @@ region        = "us-east-1"
 project_name = "POKEDEX"
 
 github_repo_url = "https://github.com/Juliocbonilla/PokedexApp"
-oauth_token        = "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"
+oauth_token        = "Sn8lmvM0qE3FGwzOgnAkVX6JpHzab1kBUvRZUz6h"
 
 github_branch_dev  = "dev"
 github_branch_qa   = "qa"
