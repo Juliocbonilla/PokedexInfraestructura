@@ -75,5 +75,15 @@ resource "aws_amplify_branch" "prod" {
 
 }
 
+output "amplify_url_prod" {
+  value =   aws_amplify_branch.prod.invoke_url
+}
 
+output "amplify_url_qa" {
+  value =   aws_amplify_branch.qa.invoke_url
+}
+
+output "amplify_url_dev" {
+  value =   aws_amplify_branch.dev.invoke_url
+}
 
