@@ -14,7 +14,7 @@ provider:
       Action:
         - dynamodb:*
       Resource:
-        - arn:aws:dynamodb:us-east-1:992382818939:table/PokemonTable
+        - arn:aws:dynamodb:us-east-1:897722674489:table/PokemonTable
 
 functions:
   getPokemons:
